@@ -12,6 +12,7 @@ main{
 .panel{
     text-align: center;
     background-color: white;
+    position: relative;
 }
 .bar{
     fill:rgb(53, 135, 189);

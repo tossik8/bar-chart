@@ -7,36 +7,30 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
 
 window.onload = () => {
     const rects = document.getElementsByTagName("rect");
-    const div = document.createElement("div");
-    div.id = "tooltip";
-    const p = document.createElement("p");
-    p.id = "title";
-    div.appendChild(p);
-    div.classList.add("invisible");
-    document.getElementsByTagName("body")[0].appendChild(div);
+    document.getElementById("tooltip")
     for(let rect of rects){
         rect.onmouseover = () => {
-            div.setAttribute("data-date", rect.attributes.getNamedItem("data-date").value);
-            p.innerHTML = rect.attributes.getNamedItem("data-date").value + "\n$" + rect.attributes.getNamedItem("data-gdp").value + "billion";
-            div.classList.add("visible");
-            div.classList.remove("invisible");
-            if(rect.x.baseVal.value > 250){
-                div.style.left = rect.x.baseVal.value + 235 + "px";
+            document.getElementById("tooltip").setAttribute("data-date", rect.attributes.getNamedItem("data-date").value);
+            document.getElementById("info").innerText = rect.attributes.getNamedItem("data-date").value + "\n$" + rect.attributes.getNamedItem("data-gdp").value + " billion";
+            document.getElementById("tooltip").classList.add("visible");
+            document.getElementById("tooltip").classList.remove("invisible");
+            if(rect.x.baseVal.value > 240){
+                document.getElementById("tooltip").style.left = rect.x.baseVal.value - 170 + "px";
             }
             else {
-                div.style.left = 475 + "px";
+                document.getElementById("tooltip").style.left = 70 + "px";
             }
             if(rect.y.baseVal.value > 105){
-                div.style.top = rect.y.baseVal.value + 120 + "px";
+                document.getElementById("tooltip").style.top = rect.y.baseVal.value - 10 + "px";
             }
             else {
-                div.style.left = 1044 + "px";
-                div.style.top = 226 + "px";
+                document.getElementById("tooltip").style.left = 639.47 + "px";
+                document.getElementById("tooltip").style.top = 96 + "px";
             }
         }
         rect.onmouseleave = () => {
-            div.classList.remove("visible");
-            div.classList.add("invisible");
+            document.getElementById("tooltip").classList.remove("visible");
+            document.getElementById("tooltip").classList.add("invisible");
         }
     }
 }
