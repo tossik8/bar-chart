@@ -20,18 +20,18 @@ window.onload = () => {
             p.innerHTML = rect.attributes.getNamedItem("data-date").value + "\n$" + rect.attributes.getNamedItem("data-gdp").value + "billion";
             div.classList.add("visible");
             div.classList.remove("invisible");
-            if(rect.x.baseVal.value > 215){
-                div.style.left = rect.x.baseVal.value + 130 + "px";
+            if(rect.x.baseVal.value > 250){
+                div.style.left = rect.x.baseVal.value + 235 + "px";
             }
             else {
-                div.style.left = 345 + "px";
+                div.style.left = 475 + "px";
             }
-            if(rect.y.baseVal.value > 100){
-                div.style.top = rect.y.baseVal.value + 110 + "px";
+            if(rect.y.baseVal.value > 105){
+                div.style.top = rect.y.baseVal.value + 120 + "px";
             }
             else {
-                div.style.left = 945 + "px";
-                div.style.top = 210 + "px";
+                div.style.left = 1044 + "px";
+                div.style.top = 226 + "px";
             }
         }
         rect.onmouseleave = () => {
