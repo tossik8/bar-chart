@@ -1,9 +1,5 @@
 import * as d3 from 'https://unpkg.com/d3?module';
 
-fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json")
-    .then(response => response.json())
-    .then(d => createGraph(d));
-
 function createGraph(data){
     const width = 900;
     const height = 520;
@@ -49,35 +45,36 @@ function createGraph(data){
     .attr("y", height - 10)
     .attr("margin", "10px")
     .text("Source: " + data.source_name);
-
 }
 
-window.addEventListener("load",() => {
-    alert(window.onload);
-    const rects = document.getElementsByTagName("rect");
-    for(let rect of rects){
-        rect.onmouseover = () => {
-            document.getElementById("tooltip").setAttribute("data-date", rect.attributes.getNamedItem("data-date").value);
-            document.getElementById("info").innerText = rect.attributes.getNamedItem("data-date").value + "\n$" + rect.attributes.getNamedItem("data-gdp").value + " billion";
-            document.getElementById("tooltip").classList.add("visible");
-            document.getElementById("tooltip").classList.remove("invisible");
-            if(rect.x.baseVal.value > 240){
-                document.getElementById("tooltip").style.left = rect.x.baseVal.value - 170 + "px";
+fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json")
+    .then(response => response.json())
+    .then(d => createGraph(d))
+    .then(() => {
+        const rects = document.getElementsByTagName("rect");
+        for(let rect of rects){
+            rect.onmouseover = () => {
+                document.getElementById("tooltip").setAttribute("data-date", rect.attributes.getNamedItem("data-date").value);
+                document.getElementById("info").innerText = rect.attributes.getNamedItem("data-date").value + "\n$" + rect.attributes.getNamedItem("data-gdp").value + " billion";
+                document.getElementById("tooltip").classList.add("visible");
+                document.getElementById("tooltip").classList.remove("invisible");
+                if(rect.x.baseVal.value > 240){
+                    document.getElementById("tooltip").style.left = rect.x.baseVal.value - 170 + "px";
+                }
+                else {
+                    document.getElementById("tooltip").style.left = 70 + "px";
+                }
+                if(rect.y.baseVal.value > 105){
+                    document.getElementById("tooltip").style.top = rect.y.baseVal.value - 10 + "px";
+                }
+                else {
+                    document.getElementById("tooltip").style.left = 639.47 + "px";
+                    document.getElementById("tooltip").style.top = 96 + "px";
+                }
             }
-            else {
-                document.getElementById("tooltip").style.left = 70 + "px";
-            }
-            if(rect.y.baseVal.value > 105){
-                document.getElementById("tooltip").style.top = rect.y.baseVal.value - 10 + "px";
-            }
-            else {
-                document.getElementById("tooltip").style.left = 639.47 + "px";
-                document.getElementById("tooltip").style.top = 96 + "px";
+            rect.onmouseleave = () => {
+                document.getElementById("tooltip").classList.remove("visible");
+                document.getElementById("tooltip").classList.add("invisible");
             }
         }
-        rect.onmouseleave = () => {
-            document.getElementById("tooltip").classList.remove("visible");
-            document.getElementById("tooltip").classList.add("invisible");
-        }
-    }
-})
+    });
