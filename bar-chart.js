@@ -4,10 +4,11 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     .then(response => response.json())
     .then(d => createGraph(d));
 
+
 window.onload = () => {
     const rects = document.getElementsByTagName("rect");
     const div = document.createElement("div");
-    div.id = "description";
+    div.id = "tooltip";
     const p = document.createElement("p");
     p.id = "title";
     div.appendChild(p);
@@ -15,22 +16,22 @@ window.onload = () => {
     document.getElementsByTagName("body")[0].appendChild(div);
     for(let rect of rects){
         rect.onmouseover = () => {
-            p.innerHTML = rect.getElementsByTagName("text")[0].textContent;
-            p.innerText = p.innerHTML.substring(0, 10) + "\n" + p.innerHTML.substring(10);
+            div.setAttribute("data-date", rect.attributes.getNamedItem("data-date").value);
+            p.innerHTML = rect.attributes.getNamedItem("data-date").value + "\n$" + rect.attributes.getNamedItem("data-gdp").value + "billion";
             div.classList.add("visible");
             div.classList.remove("invisible");
-            if(rect.x.baseVal.value > 200){
+            if(rect.x.baseVal.value > 215){
                 div.style.left = rect.x.baseVal.value + 130 + "px";
             }
             else {
-                div.style.left = 325 + "px";
+                div.style.left = 345 + "px";
             }
             if(rect.y.baseVal.value > 100){
-                div.style.top = rect.y.baseVal.value + 120 + "px";
+                div.style.top = rect.y.baseVal.value + 110 + "px";
             }
             else {
-                div.style.left = 963 + "px";
-                div.style.top = 221 + "px";
+                div.style.left = 945 + "px";
+                div.style.top = 210 + "px";
             }
         }
         rect.onmouseleave = () => {
@@ -44,33 +45,35 @@ function createGraph(data){
     console.log(data);
     const width = 900;
     const height = 520;
-    const margins = {top: 60, right: 40, bottom: 60, left: 40};
+    const margins = {top: 60, right: 50, bottom: 60, left: 50};
     const svg = d3.select("div.panel").append("svg").attr("width", width).attr("height", height);
     const xScale = d3.scaleTime()
                      .domain([new Date(data.from_date), new Date(data.to_date)])
                      .range([margins.left,width - margins.right]);
     const yScale = d3.scaleLinear()
                      .domain([d3.min(data.data, d => d[1]),d3.max(data.data, d => d[1])])
-                     .range([height - margins.bottom - 10, margins.top + 10]);
+                     .range([height - margins.bottom - 10, margins.top]);
 
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale);
 
     svg.append("g")
+    .attr("id", "x-axis")
     .attr("transform", "translate(0," + (height - margins.bottom) + ")")
     .call(xAxis);
     svg.append("g")
+    .attr("id", "y-axis")
     .attr("transform", "translate(" + margins.left + ", 10)")
     .call(yAxis);
 
     svg.selectAll("rect").data(data.data).enter().append("rect")
     .attr("x", d => xScale(new Date(d[0])))
     .attr("y", d => yScale(d[1]))
+    .attr("class", "bar")
+    .attr("data-date", d => d[0])
+    .attr("data-gdp" , d => d[1])
     .attr("width", 5)
-    .attr("height", d => height - yScale(d[1]) - margins.bottom)
-    .append("text")
-    .attr("class", "data")
-    .text(d => d[0] + " $" + d[1] + " billion");
+    .attr("height", d => height - yScale(d[1]) - margins.bottom);
 
     svg.append("text")
     .attr("x", margins.left + 20)

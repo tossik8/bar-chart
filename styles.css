@@ -3,6 +3,7 @@ body{
     min-height: 100vh;
     display: flex;
     place-content: center;
+    background-color: rgb(32, 77, 111);
 }
 main{
     display: flex;
@@ -10,28 +11,24 @@ main{
 }
 .panel{
     text-align: center;
+    background-color: white;
 }
-svg{
-    background-color: rgba(10,50,100, 0.3);
+.bar{
+    fill:rgb(53, 135, 189);
 }
-rect{
-    fill:rgb(51,173,255);
+.bar:hover{
+    fill:rgb(117, 165, 50);
 }
-rect:hover{
-    fill:rgb(255,255,255);
-}
-text.data{
-    visibility: hidden;
-}
-#description{
-    background-color: purple;
+#tooltip{
+    background-color: rgb(63, 118, 160);
     height: 4rem;
     width: 10rem;
     position: absolute;
     text-align: center;
     font-size: 1.2rem;
+    box-shadow: 0 0 1rem 0.1rem rgb(40,40,40);
 }
-#description > p{
+#tooltip > p{
     margin-top: 0.75rem;
 }
 .visible{
