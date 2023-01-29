@@ -38,3 +38,6 @@ main{
 .invisible{
     visibility: hidden;
 }
+.source{
+    margin-right: 10px;
+}
