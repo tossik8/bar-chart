@@ -1,4 +1,3 @@
-import * as d3 from 'https://unpkg.com/d3?module';
 
 let width = document.documentElement.clientWidth/1.2;
 let height = document.documentElement.clientHeight/1.5;
