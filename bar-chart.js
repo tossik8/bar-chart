@@ -58,6 +58,8 @@ function renderSVG(data, width, height, margins){
     svg.selectAll("rect").data(data.data).enter().append("rect")
     .attr("x", d => xScale(new Date(d[0])))
     .attr("y", d => yScale(d[1]))
+    .transition()
+    .duration(1000)
     .attr("class", "bar")
     .attr("data-date", d => d[0])
     .attr("data-gdp" , d => d[1])
